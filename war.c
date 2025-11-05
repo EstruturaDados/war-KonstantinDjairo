@@ -31,27 +31,35 @@
 
 // --- Função Principal (main) ---
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
+#include <stdio.h>
+
+typedef struct {
+    char nome[50];
+    char cor[20];
+    int tropas;
+} Territorio;
+
 int main() {
-    // 1. Configuração Inicial (Setup):
-    // - Define o locale para português.
-    // - Inicializa a semente para geração de números aleatórios com base no tempo atual.
-    // - Aloca a memória para o mapa do mundo e verifica se a alocação foi bem-sucedida.
-    // - Preenche os territórios com seus dados iniciais (tropas, donos, etc.).
-    // - Define a cor do jogador e sorteia sua missão secreta.
+    Territorio mapa[5];  // ✅ vetor estático com 5 elementos
 
-    // 2. Laço Principal do Jogo (Game Loop):
-    // - Roda em um loop 'do-while' que continua até o jogador sair (opção 0) ou vencer.
-    // - A cada iteração, exibe o mapa, a missão e o menu de ações.
-    // - Lê a escolha do jogador e usa um 'switch' para chamar a função apropriada:
-    //   - Opção 1: Inicia a fase de ataque.
-    //   - Opção 2: Verifica se a condição de vitória foi alcançada e informa o jogador.
-    //   - Opção 0: Encerra o jogo.
-    // - Pausa a execução para que o jogador possa ler os resultados antes da próxima rodada.
+    for (int i = 0; i < 5; i++) {
+        printf("Digite o nome do território %d: ", i + 1);
+        fgets(mapa[i].nome, sizeof(mapa[i].nome), stdin);
 
-    // 3. Limpeza:
-    // - Ao final do jogo, libera a memória alocada para o mapa para evitar vazamentos de memória.
+        printf("Digite a cor do exército dominante: ");
+        fgets(mapa[i].cor, sizeof(mapa[i].cor), stdin);
 
-    return 0;
+        printf("Digite o número de tropas: ");
+        scanf("%d", &mapa[i].tropas);
+        getchar();  // limpa o '\n' do buffer
+    }
+
+    printf("\n--- Estado Atual do Mapa ---\n");
+    for (int i = 0; i < 5; i++) {
+        printf("Território: %s", mapa[i].nome);
+        printf("Cor do Exército: %s", mapa[i].cor);
+        printf("Tropas: %d\n\n", mapa[i].tropas);
+    }
 }
 
 // --- Implementação das Funções ---
